@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM openjdk:11.0
 
 MAINTAINER Dmitry Karikh <the.dr.hax@gmail.com>
 
@@ -12,7 +12,8 @@ RUN dpkg --add-architecture i386 \
 # Set up environment variables
 ENV ANDROID_SDK_ROOT="/home/user/android-sdk-linux" \
     SDK_URL="https://dl.google.com/android/repository/commandlinetools-linux-6609375_latest.zip" \
-    GRADLE_URL="https://services.gradle.org/distributions/gradle-6.7-bin.zip"
+    GRADLE_URL="https://services.gradle.org/distributions/gradle-6.7-bin.zip" \
+    GRADLE_FOLDER_NAME="gradle-6.7"
 
 # Create a non-root user
 RUN useradd -m user
@@ -33,7 +34,7 @@ RUN mkdir "$ANDROID_SDK_ROOT" .android \
 # Install Gradle
 RUN wget $GRADLE_URL -O gradle.zip \
  && unzip gradle.zip \
- && mv gradle-6.7 gradle \
+ && mv "$GRADLE_FOLDER_NAME" gradle \
  && rm gradle.zip \
  && mkdir .gradle
 
